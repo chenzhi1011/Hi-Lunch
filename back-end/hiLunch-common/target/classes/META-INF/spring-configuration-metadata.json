@@ -1,0 +1,28 @@
+{
+  "groups": [
+    {
+      "name": "hiLunch.jwt",
+      "type": "com.hiLunch.properties.JwtProperties",
+      "sourceType": "com.hiLunch.properties.JwtProperties"
+    }
+  ],
+  "properties": [
+    {
+      "name": "hiLunch.jwt.admin-secret-key",
+      "type": "java.lang.String",
+      "description": "管理端员工生成jwt令牌相关配置",
+      "sourceType": "com.hiLunch.properties.JwtProperties"
+    },
+    {
+      "name": "hiLunch.jwt.admin-token-name",
+      "type": "java.lang.String",
+      "sourceType": "com.hiLunch.properties.JwtProperties"
+    },
+    {
+      "name": "hiLunch.jwt.admin-ttl",
+      "type": "java.lang.Long",
+      "sourceType": "com.hiLunch.properties.JwtProperties"
+    }
+  ],
+  "hints": []
+}

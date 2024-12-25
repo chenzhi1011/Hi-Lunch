@@ -27,10 +27,8 @@ public class Employee implements Serializable {
 
     private String phone;
 
-    private String sex;
 
-    //TODO 需要删除
-//    private String idNumber;
+    //TODO need to be deleted: sex and id_number
 
     private Integer status;
 

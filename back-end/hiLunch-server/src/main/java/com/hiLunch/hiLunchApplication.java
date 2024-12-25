@@ -1,6 +1,8 @@
-package com.sky;
+package com.hiLunch;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.annotations.Mapper;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Slf4j
 @EnableCaching//开发缓存注解功能
 @EnableScheduling //开启任务调度
+@MapperScan("com.hiLunch.mapper")
 public class hiLunchApplication {
     public static void main(String[] args) {
         SpringApplication.run(hiLunchApplication.class, args);
