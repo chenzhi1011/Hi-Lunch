@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Select;
 public interface EmployeeMapper {
 
     /**
-     * 根据用户名查询员工
+     * usernameで従業員を探す
      * @param username
      * @return
      */
@@ -19,7 +19,7 @@ public interface EmployeeMapper {
     Employee getByUsername(String username);
 
     /**
-     * 插入员工数据
+     *　従業員データ挿入
      * @param employee
      */
     @Insert("insert into employee (name, username, password, phone, create_time, update_time, create_user, update_user,status) " +
@@ -29,7 +29,7 @@ public interface EmployeeMapper {
     void insert(Employee employee);
 
     /**
-     * 分页查询
+     * ページングクエリ
      * @param employeePageQueryDTO
      * @return
      */
@@ -43,7 +43,7 @@ public interface EmployeeMapper {
     void update(Employee employee);
 
     /**
-     * 根据id查询员工信息
+     * ID番号でクエリ
      * @param id
      * @return
      */

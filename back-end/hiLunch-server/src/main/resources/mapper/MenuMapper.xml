@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiLunch.mapper.MenuMapper">
+    <insert id="insert">
+        insert into menu (name, category, price, image, description, create_time, update_time, create_user,
+                          update_user, is_sale)
+        values (#{name}, #{category}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser},
+                #{updateUser}, #{isSale})
+    </insert>
+
+<!--    TODO-->
+    <select id="pageQuery" resultType="com.hiLunch.vo.MenuVO">
+        select * from menu
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="category != null">
+                and category = #{category}
+            </if>
+            <if test="isSale != null">
+                and is_sale = #{isSale}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <update id="update">
+        update menu
+        <set>
+            <if test="name != null">name = #{name},</if>
+            <if test="category != null">category = #{category},</if>
+            <if test="price != null">price = #{price},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="description != null">description = #{description},</if>
+            <if test="isSale != null">is_sale = #{isSale},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateUser != null">update_user = #{updateUser},</if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <select id="list" resultType="Menu" parameterType="Menu">
+        select * from menu
+        <where>
+            <if test="name != null">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="category != null">
+                and category = #{category}
+            </if>
+            <if test="isSale != null">
+                and is_sale = #{isSale}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="countByMap" resultType="java.lang.Integer">
+        select count(id) from dish
+        <where>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+        </where>
+    </select>
+</mapper>

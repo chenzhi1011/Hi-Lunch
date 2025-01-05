@@ -1,5 +1,7 @@
 package com.hiLunch.config;
+import com.hiLunch.interceptor.JwtTokenAdminInterceptor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -13,14 +15,23 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 
 /**
- * 配置类，注册web层相关组件
+ * 設定クラスで、WEB層の関連コンポーネントを登録する
  */
 @Configuration
 @Slf4j
 public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
+    @Autowired
+    JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+    protected void addInterceptors(InterceptorRegistry registry) {
+        log.info("カスタムインターセプタ〜の登録を開始...");
+        registry.addInterceptor(jwtTokenAdminInterceptor)
+                .addPathPatterns("/admin/**")
+                .excludePathPatterns("/admin/employee/login");
+    }
+
     /**
-     * knife4j生成接口文档
+     * knife4jで　API　docを生成
      * @return
      */
     @Bean
@@ -40,7 +51,7 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     }
 
     /**
-     * 设置静态资源映射
+     * 静的リソースのマッピングを設定
      * @param registry
      */
 
