@@ -29,11 +29,20 @@ logging:
 
 hilunch:
   jwt:
+#admin
     # 秘密鍵
     admin-secret-key: hiLunch
     # 有効時間
     admin-ttl: 7200000
     # トークン名
     admin-token-name: token
+
+#user
+    # 秘密鍵
+    user-secret-key: hiLunchUser
+    # 有効時間
+    user-ttl: 7200000
+    # トークン名
+    user-token-name: token
 
 
