@@ -24,6 +24,6 @@ public interface UserService {
      * @param userDTO
      * @return
      */
-    void updateUserInfo(UserDTO userDTO);
+    void updateUserInfo(UserDTO userDTO,String oldPwd);
 
 }

@@ -11,8 +11,8 @@ public interface TokenMapper {
     @Select("select * from hiLunch_db.persist_token where secret_token= #{token};")
     PersistToken check(String token);
 
-    @Insert("insert into persist_token (secret_token) values (#{token})")
-    void insert(String token);
+    @Insert("insert into persist_token (secret_token,create_time) values (#{secretToken},#{createTime})")
+    void insert(PersistToken persistToken);
 
     @Delete("delete from persist_token where secret_token = #{token} ")
     void delete(String token);

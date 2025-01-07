@@ -57,8 +57,13 @@ public class UserServiceImpl implements UserService {
         userMapper.insert(user);
     }
 
-    public void updateUserInfo(UserDTO userDTO){
-        User user = new User();
+    public void updateUserInfo(UserDTO userDTO,String oldPwd){
+        Long userId = BaseContext.getCurrentId();
+        User user = userMapper.getById(userId);
+        //获取pwd查看是否正确
+        if(!oldPwd.equals(user.getPwd())){
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+        }
         BeanUtils.copyProperties(userDTO,user);
         //TODO AOP
         user.setUpdateTime(LocalDateTime.now());
