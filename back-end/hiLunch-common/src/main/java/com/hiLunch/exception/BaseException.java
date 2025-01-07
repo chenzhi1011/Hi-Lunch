@@ -1,7 +1,7 @@
 package com.hiLunch.exception;
 
 /**
- * 業務上には異常あり
+ * 業務上には例外あり
  */
 public class BaseException extends RuntimeException {
 

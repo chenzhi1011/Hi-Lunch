@@ -1,22 +1,19 @@
 package com.hiLunch.controller.user;
 
 import com.hiLunch.constant.JwtClaimsConstant;
-import com.hiLunch.constant.MessageConstant;
-import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.UserDTO;
 import com.hiLunch.entity.User;
-import com.hiLunch.exception.AccountNotFoundException;
 import com.hiLunch.properties.JwtProperties;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.UserService;
 import com.hiLunch.utils.JwtUtil;
 import com.hiLunch.vo.UserVO;
-import io.jsonwebtoken.Claims;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import java.util.HashMap;
@@ -53,8 +50,13 @@ public class UserController {
                 .department(user.getDepartment())
                 .token(jwtToken)
                 .build();
-
+        //TODO 返回给前端的userVO对象如何解析
         return Result.success(userVO);
+    }
 
+    @PostMapping("/signup")
+    public Result signUp(@RequestBody UserDTO userDTO){
+        userService.signup(userDTO);
+        return Result.success();
     }
 }

@@ -1,5 +1,6 @@
 package com.hiLunch.config;
 import com.hiLunch.interceptor.JwtTokenAdminInterceptor;
+import com.hiLunch.interceptor.JwtTokenUserInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -23,11 +24,18 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
 
     @Autowired
     JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
+    @Autowired
+    JwtTokenUserInterceptor jwtTokenUserInterceptor;
+
     protected void addInterceptors(InterceptorRegistry registry) {
         log.info("カスタムインターセプタ〜の登録を開始...");
         registry.addInterceptor(jwtTokenAdminInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/employee/login");
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/login")
+                .excludePathPatterns("/user/signup");
     }
 
     /**

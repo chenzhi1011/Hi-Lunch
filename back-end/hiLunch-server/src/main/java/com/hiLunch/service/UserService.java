@@ -5,5 +5,18 @@ import com.hiLunch.dto.UserDTO;
 import com.hiLunch.entity.User;
 
 public interface UserService {
-    public User login(UserDTO userDTO);
+    /**
+     * userログイン
+     * @param userDTO
+     * @return
+     */
+    User login(UserDTO userDTO);
+
+    /**
+     * user signup
+     * @param userDTO
+     * @return
+     */
+    void signup(UserDTO userDTO);
+
 }

@@ -19,4 +19,6 @@ public class MessageConstant {
     public static final String ORDER_STATUS_ERROR = "注文のステータスが異常あり";
     public static final String ORDER_NOT_FOUND = "注文が存在しない";
 
+    public static final String ACCOUNT_EXIST = "アカウントがすでに存在している";
+
 }
