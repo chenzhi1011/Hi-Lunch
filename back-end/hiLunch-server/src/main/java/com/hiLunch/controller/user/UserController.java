@@ -1,21 +1,23 @@
 package com.hiLunch.controller.user;
 
 import com.hiLunch.constant.JwtClaimsConstant;
+import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.UserDTO;
 import com.hiLunch.entity.User;
+import com.hiLunch.mapper.TokenMapper;
 import com.hiLunch.properties.JwtProperties;
 import com.hiLunch.result.Result;
+import com.hiLunch.service.TokenService;
 import com.hiLunch.service.UserService;
 import com.hiLunch.utils.JwtUtil;
 import com.hiLunch.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,6 +30,8 @@ public class UserController {
     JwtProperties jwtProperties;
     @Autowired
     UserService userService;
+    @Autowired
+    TokenService tokenService;
 
     @PostMapping("/login")
     @ApiOperation(value = "user login")
@@ -50,6 +54,8 @@ public class UserController {
                 .department(user.getDepartment())
                 .token(jwtToken)
                 .build();
+        //TODO 登陆成功把token持久化
+        tokenService.insert(jwtToken);
         //TODO 返回给前端的userVO对象如何解析
         return Result.success(userVO);
     }
@@ -59,4 +65,18 @@ public class UserController {
         userService.signup(userDTO);
         return Result.success();
     }
+
+    @PutMapping("/pwdreset")
+    //TODO 重要信息暴露在url中
+    public Result pwdReset(@RequestBody UserDTO userDTO){
+        userService.updateUserInfo(userDTO);
+        return Result.success();
+    }
+
+    @PutMapping("/logout")
+    public Result logout(){
+        tokenService.delete(BaseContext.getToken());
+        return Result.success();
+    }
+
 }

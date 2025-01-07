@@ -1,6 +1,7 @@
 package com.hiLunch.service.impl;
 
 import com.hiLunch.constant.MessageConstant;
+import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.UserDTO;
 import com.hiLunch.entity.User;
 import com.hiLunch.exception.AccountExistException;
@@ -33,7 +34,7 @@ public class UserServiceImpl implements UserService {
         }
         //pwd検証
        //TODO　user側からのpwdをmd5で暗号化処理
-        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes());
+//        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes());
         if (!pwd.equals(user.getPwd())) {
             //パスワードが合ってない場合
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
@@ -54,5 +55,14 @@ public class UserServiceImpl implements UserService {
         user.setCreateTime(LocalDateTime.now());
         user.setUpdateTime(LocalDateTime.now());
         userMapper.insert(user);
+    }
+
+    public void updateUserInfo(UserDTO userDTO){
+        User user = new User();
+        BeanUtils.copyProperties(userDTO,user);
+        //TODO AOP
+        user.setUpdateTime(LocalDateTime.now());
+        user.setId(BaseContext.getCurrentId());
+        userMapper.update(user);
     }
 }

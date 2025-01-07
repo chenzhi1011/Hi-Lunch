@@ -19,4 +19,11 @@ public interface UserService {
      */
     void signup(UserDTO userDTO);
 
+    /**
+     * user update
+     * @param userDTO
+     * @return
+     */
+    void updateUserInfo(UserDTO userDTO);
+
 }

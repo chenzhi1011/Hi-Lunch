@@ -19,7 +19,7 @@ public class jwtCreateTest {
         Map<String,Object> claim = new HashMap<>();
         Long id = 71080550L;
         claim.put(JwtClaimsConstant.ID,id);
-        String jwtToken = jwtUtil.createJWT("hiLunchUser",7200000,claim);
+        String jwtToken = jwtUtil.createJWT("hiLunchUser",720000000,claim);
         System.out.println(jwtToken);
     }
 }

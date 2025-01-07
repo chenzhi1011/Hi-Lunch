@@ -12,4 +12,6 @@ public interface UserMapper {
     @Insert("insert into user (id,pwd,department,email,create_time,update_time)" +
             " values (#{id},#{pwd},#{department},#{email},#{createTime},#{updateTime})")
     void insert(User user);
+
+    void update(User user);
 }
