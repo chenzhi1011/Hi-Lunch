@@ -20,7 +20,7 @@ import java.util.Set;
  * メニュー管理
  */
 @RestController
-@RequestMapping("/admin/dish")
+@RequestMapping("/admin/menu")
 @Api(tags = "メニューに関するAPI")
 @Slf4j
 public class MenuController {
@@ -122,4 +122,5 @@ public class MenuController {
         return Result.success();
     }
 
+    //TODO stocks設定API　まだかんせいしていない
 }

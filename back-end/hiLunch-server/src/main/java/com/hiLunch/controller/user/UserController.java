@@ -4,7 +4,6 @@ import com.hiLunch.constant.JwtClaimsConstant;
 import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.UserDTO;
 import com.hiLunch.entity.User;
-import com.hiLunch.mapper.TokenMapper;
 import com.hiLunch.properties.JwtProperties;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.TokenService;
@@ -14,10 +13,8 @@ import com.hiLunch.vo.UserVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.el.parser.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 

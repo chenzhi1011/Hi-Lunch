@@ -15,8 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class MenuVO implements Serializable {
 
-
-    private Long id;
     private String name;
     private Integer price;
     private String description;

@@ -71,4 +71,10 @@ public interface MenuMapper {
      * @return
      */
     Integer countByMap(Map map);
+
+
+    //TODO 複雑なSQL　　練習
+@Select("select name,description,image from menu m left join stocks s on m.id=s.menu_id" +
+        " where weekday=#{weekday} and is_sale=1 and stock!=0 order by stock asc limit 3")
+    List<MenuVO> getLeastThree(Integer weekday);
 }

@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 @Data
 public class MenuDTO implements Serializable {
-
     private Long id;
     private String name;
     private Integer price;

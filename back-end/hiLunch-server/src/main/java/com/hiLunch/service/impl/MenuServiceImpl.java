@@ -7,6 +7,8 @@ import com.hiLunch.dto.MenuPageQueryDTO;
 import com.hiLunch.entity.Menu;
 import com.hiLunch.exception.DeletionNotAllowedException;
 import com.hiLunch.mapper.MenuMapper;
+import com.hiLunch.mapper.OrderMapper;
+import com.hiLunch.mapper.StockMapper;
 import com.hiLunch.result.PageResult;
 import com.hiLunch.service.MenuService;
 import com.hiLunch.constant.MessageConstant;
@@ -27,6 +29,10 @@ public class MenuServiceImpl implements MenuService {
 
     @Autowired
     private MenuMapper menuMapper;
+    @Autowired
+    private StockMapper stockMapper;
+    @Autowired
+    private OrderMapper orderMapper;
 
     /**
      * 料理追加
@@ -116,4 +122,29 @@ public class MenuServiceImpl implements MenuService {
         menuMapper.update(menu);
 
     }
+
+    /*
+    * user
+    * ホーム画面に今日のベストセーラー３
+    *
+    * */
+    public List<MenuVO> getTop3(Integer weekday){
+        List<MenuVO> list  = menuMapper.getLeastThree(weekday);
+
+        return list;
+    }
+
+    /*
+     * 今まで一番人気の料理
+     *
+     * */
+    @Override
+    public MenuVO getBestSaler() {
+        Menu menu = orderMapper.getBestSaler();
+        MenuVO menuVO = new MenuVO();
+        BeanUtils.copyProperties(menu,menuVO);
+        return menuVO;
+    }
+
+
 }

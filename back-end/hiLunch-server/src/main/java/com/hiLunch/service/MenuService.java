@@ -54,4 +54,17 @@ public interface MenuService {
      */
     void startOrStop(Integer status, Long id);
 
+    /*
+     * user
+     * ホーム画面に今日のベストセーラー３
+     *
+     * */
+    public List<MenuVO> getTop3(Integer weekday);
+
+    /*
+     * user
+     * 今まで一番人気の料理
+     *
+     * */
+    MenuVO getBestSaler();
 }
