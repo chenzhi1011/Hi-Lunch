@@ -4,6 +4,11 @@
       "name": "hilunch.jwt",
       "type": "com.hiLunch.properties.JwtProperties",
       "sourceType": "com.hiLunch.properties.JwtProperties"
+    },
+    {
+      "name": "hilunch.paypay",
+      "type": "com.hiLunch.properties.PaypayProperties",
+      "sourceType": "com.hiLunch.properties.PaypayProperties"
     }
   ],
   "properties": [
@@ -38,6 +43,26 @@
       "name": "hilunch.jwt.user-ttl",
       "type": "java.lang.Long",
       "sourceType": "com.hiLunch.properties.JwtProperties"
+    },
+    {
+      "name": "hilunch.paypay.api-key",
+      "type": "java.lang.String",
+      "sourceType": "com.hiLunch.properties.PaypayProperties"
+    },
+    {
+      "name": "hilunch.paypay.api-secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.hiLunch.properties.PaypayProperties"
+    },
+    {
+      "name": "hilunch.paypay.assume-merchant",
+      "type": "java.lang.String",
+      "sourceType": "com.hiLunch.properties.PaypayProperties"
+    },
+    {
+      "name": "hilunch.paypay.production-mode",
+      "type": "java.lang.Boolean",
+      "sourceType": "com.hiLunch.properties.PaypayProperties"
     }
   ],
   "hints": []

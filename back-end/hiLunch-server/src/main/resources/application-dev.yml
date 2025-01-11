@@ -6,3 +6,11 @@ hiLunch:
     database: hiLunch_db
     username: root
     password: root
+
+
+
+paypay:
+  production-mode: false
+  api-key: a_0j60HhiRh2_lhJn
+  api-secret-key: nOzVvwP8rAhrmfl9g/uz/h/KqXOV1y0PWiPPAduKF7U=
+  assume-merchant: 870677012170178560

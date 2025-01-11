@@ -1,13 +1,25 @@
 package com.hiLunch.controller.user;
 
+import com.hiLunch.constant.MessageConstant;
+import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.dto.OrderDTO;
+import com.hiLunch.exception.PaymentErrorException;
+import com.hiLunch.properties.PaypayProperties;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.OrderService;
 import com.hiLunch.vo.OrderVO;
 import io.swagger.annotations.Api;
+import jp.ne.paypay.ApiClient;
+import jp.ne.paypay.ApiException;
+import jp.ne.paypay.Configuration;
+import jp.ne.paypay.api.PaymentApi;
+import jp.ne.paypay.model.MoneyAmount;
+import jp.ne.paypay.model.QRCode;
+import jp.ne.paypay.model.QRCodeDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -18,6 +30,8 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    PaypayProperties paypayProperties;
 
 
     /**
@@ -45,6 +59,55 @@ public class OrderController {
 //        orderService.createOrder(list);
 //        return Result.success();
 //    }
+
+    /**
+     * 支払いに行く
+     * @param list
+     *
+     */
+    @PostMapping("/pay")
+    public Result<String> pay(@RequestBody List<MenuDTO> list) throws ApiException {
+        QRCode qrCode = new QRCode();
+        Integer amount = 0;
+        for (MenuDTO m:list
+             ) {
+            amount += m.getPrice();
+        }
+        log.info("amount:{}",amount);
+        qrCode.setAmount(new MoneyAmount().amount(amount).currency(MoneyAmount.CurrencyEnum.JPY));
+        // TODO　一意の番号を設置して
+        qrCode.setMerchantPaymentId("order-19237465");
+        qrCode.setCodeType("ORDER_QR");
+        qrCode.setOrderDescription("your all bills");
+        qrCode.isAuthorization(false);
+        qrCode.setRedirectType(QRCode.RedirectTypeEnum.WEB_LINK);
+
+        ApiClient apiClient = new Configuration().getDefaultApiClient();
+        apiClient.setProductionMode(false);
+//        String a = paypayProperties.getApiKey();
+//        String b = paypayProperties.getApiSecretKey();
+//        String c = paypayProperties.getAssumeMerchant();
+        apiClient.setApiKey(paypayProperties.getApiKey());
+        apiClient.setApiSecretKey(paypayProperties.getApiSecretKey());
+        apiClient.setAssumeMerchant(paypayProperties.getAssumeMerchant());
+        log.info("API Key: {}", paypayProperties.getApiKey());
+        log.info("Merchant: {}", apiClient.getAssumeMerchant());
+
+
+        PaymentApi apiInstance = new PaymentApi(apiClient);
+
+        QRCodeDetails response = apiInstance.createQRCode(qrCode);
+        if(!response.getResultInfo().getCode().equals("SUCCESS")){
+            throw new PaymentErrorException(response.getResultInfo().getMessage());
+        }
+        return Result.success(response.getData().getUrl());
+    }
+
+
+    public Result cancelPay(){
+        return null;
+    }
+
 
 
 }

@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController
+@RestController("userMenuController")
 @Api(tags="ユーザー側のメニューに関する")
 @RequestMapping("/user/menu")
 public class MenuController {

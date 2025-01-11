@@ -45,4 +45,10 @@ hilunch:
     # トークン名
     user-token-name: token
 
+  paypay:
+    production-mode: ${paypay.production-mode}
+    api-key: ${paypay.api-key}
+    api-secret-key: ${paypay.api-secret-key}
+    assume-merchant: ${paypay.assume-merchant}
+
 

@@ -21,4 +21,5 @@ public class MessageConstant {
 
     public static final String ACCOUNT_EXIST = "アカウントがすでに存在している";
 
+    public static final String PAYMENT_ERROR = "支払いが失敗しました";
 }
