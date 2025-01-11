@@ -67,4 +67,11 @@ public interface MenuService {
      *
      * */
     MenuVO getBestSaler();
+
+
+    /*
+     * show menu by day
+     *
+     * */
+    List<MenuVO> getMenuByDay(Integer weekday);
 }

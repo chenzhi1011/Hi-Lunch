@@ -24,4 +24,5 @@ public class MenuVO implements Serializable {
     private Integer weekday;
     private LocalDateTime updateTime;
 
+
 }

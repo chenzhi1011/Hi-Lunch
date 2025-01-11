@@ -77,4 +77,13 @@ public interface MenuMapper {
 @Select("select name,description,image from menu m left join stocks s on m.id=s.menu_id" +
         " where weekday=#{weekday} and is_sale=1 and stock!=0 order by stock asc limit 3")
     List<MenuVO> getLeastThree(Integer weekday);
+
+
+    /*
+     * show today'menu
+     *
+     * */
+    @Select("select *,stock from menu left join stocks on menu.id = stocks.menu_id " +
+            "where weekday=#{weekday}")
+    List<MenuVO> getMenuByDay(Integer weekday);
 }

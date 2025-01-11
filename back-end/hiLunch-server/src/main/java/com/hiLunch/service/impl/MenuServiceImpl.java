@@ -146,5 +146,15 @@ public class MenuServiceImpl implements MenuService {
         return menuVO;
     }
 
+    /*
+     * show menu by day
+     *
+     * */
+    @Override
+    public List<MenuVO> getMenuByDay(Integer weekday) {
+        List<MenuVO> list = menuMapper.getMenuByDay(weekday);
+        return list;
+    }
+
 
 }
