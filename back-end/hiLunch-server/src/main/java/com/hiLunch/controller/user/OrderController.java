@@ -7,8 +7,10 @@ import com.hiLunch.exception.PaymentErrorException;
 import com.hiLunch.properties.PaypayProperties;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.OrderService;
+import com.hiLunch.utils.OrderNumberGenUtil;
 import com.hiLunch.vo.OrderVO;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import jp.ne.paypay.ApiClient;
 import jp.ne.paypay.ApiException;
 import jp.ne.paypay.Configuration;
@@ -18,6 +20,7 @@ import jp.ne.paypay.model.QRCode;
 import jp.ne.paypay.model.QRCodeDetails;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -61,12 +64,16 @@ public class OrderController {
 //    }
 
     /**
-     * 支払いに行く
+     * paypay支払いに行く
      * @param list
      *
      */
     @PostMapping("/pay")
+    @ApiOperation("ペイペイの支払い")
+    @Transactional
+    //どこか失敗するなら、ロールバック
     public Result<String> pay(@RequestBody List<MenuDTO> list) throws ApiException {
+        //TODO stocks check
         QRCode qrCode = new QRCode();
         Integer amount = 0;
         for (MenuDTO m:list
@@ -75,8 +82,10 @@ public class OrderController {
         }
         log.info("amount:{}",amount);
         qrCode.setAmount(new MoneyAmount().amount(amount).currency(MoneyAmount.CurrencyEnum.JPY));
-        // TODO　一意の番号を設置して
-        qrCode.setMerchantPaymentId("order-19237465");
+
+        //抽出
+        String orderNum = OrderNumberGenUtil.generateOrderNumber();
+        qrCode.setMerchantPaymentId(orderNum);
         qrCode.setCodeType("ORDER_QR");
         qrCode.setOrderDescription("your all bills");
         qrCode.isAuthorization(false);
@@ -84,9 +93,6 @@ public class OrderController {
 
         ApiClient apiClient = new Configuration().getDefaultApiClient();
         apiClient.setProductionMode(false);
-//        String a = paypayProperties.getApiKey();
-//        String b = paypayProperties.getApiSecretKey();
-//        String c = paypayProperties.getAssumeMerchant();
         apiClient.setApiKey(paypayProperties.getApiKey());
         apiClient.setApiSecretKey(paypayProperties.getApiSecretKey());
         apiClient.setAssumeMerchant(paypayProperties.getAssumeMerchant());
@@ -95,17 +101,29 @@ public class OrderController {
 
 
         PaymentApi apiInstance = new PaymentApi(apiClient);
-
         QRCodeDetails response = apiInstance.createQRCode(qrCode);
         if(!response.getResultInfo().getCode().equals("SUCCESS")){
             throw new PaymentErrorException(response.getResultInfo().getMessage());
         }
+        //TODO  if pay successfully, stock-1
         return Result.success(response.getData().getUrl());
     }
 
 
-    public Result cancelPay(){
-        return null;
+    /**
+     * cash支払いに行く
+     * @param list
+     *
+     */
+    @PostMapping("/cash")
+    @ApiOperation("支払い方法は現金で")
+    @Transactional
+    public Result PayByCash(@RequestBody List<MenuDTO> list){
+        //TODO stocks check
+        String orderNum = OrderNumberGenUtil.generateOrderNumber();
+        orderService.cashOrderNum(list,orderNum);
+        //TODO  if pay successfully, stock-1
+        return Result.success(orderNum);
     }
 
 

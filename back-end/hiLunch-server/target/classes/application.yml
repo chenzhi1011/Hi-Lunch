@@ -11,6 +11,11 @@ spring:
     url: jdbc:mysql://${hiLunch.datasource.host}:${hiLunch.datasource.port}/${hiLunch.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
     username: ${hiLunch.datasource.username}
     password: ${hiLunch.datasource.password}
+  data:
+    redis:
+      host: ${hiLunch.redi.host}
+      port: ${hiLunch.redis.port}
+
 
 
 mybatis:

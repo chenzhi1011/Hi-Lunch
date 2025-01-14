@@ -16,6 +16,7 @@ public class MenuDTO implements Serializable {
     private Integer category;
     private Integer isSale;
     private Integer weekday;
+    private Integer num;
 
 
 }

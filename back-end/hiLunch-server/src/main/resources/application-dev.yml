@@ -7,6 +7,12 @@ hiLunch:
     username: root
     password: root
 
+  redis:
+    host: localhost
+    port: 6378
+    password: 123456
+  #  database: DB0
+
 
 
 paypay:
