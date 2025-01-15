@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuVO implements Serializable {
-
+    private Long id;
     private String name;
     private Integer price;
     private String description;
@@ -23,6 +23,7 @@ public class MenuVO implements Serializable {
     private Integer isSale;
     private Integer weekday;
     private LocalDateTime updateTime;
+    private Integer num;
 
 
 }

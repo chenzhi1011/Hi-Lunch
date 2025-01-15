@@ -4,15 +4,17 @@ import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.entity.Menu;
 import com.hiLunch.result.Result;
+import com.hiLunch.vo.MenuVO;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 @RestController
 @ApiOperation("カートに関するAPI")
@@ -88,6 +90,52 @@ public class CartController {
     @DeleteMapping("/delete")
     public Result deleteByMenuId(Long menuId){
         String redisKey = userId+":"+menuId;
+        hashOperations.delete(redisKey);
         return Result.success();
+    }
+
+    /*
+     * userIDでカート商品を取得する
+     *
+     * */
+    @GetMapping
+    public Result<List> getAllCartByUserId(){
+        String pattern = userId+":*";
+        Set<String> keys = redisTemplate.keys(pattern);
+        List<MenuVO> menus = new ArrayList<>();
+        if(keys==null||keys.isEmpty()){
+            return Result.success(null);
+        }
+        for (String key:keys){
+            Map<Object,Object> fields = redisTemplate.opsForHash().entries(key);
+            if(fields != null && !fields.isEmpty()){
+                MenuVO menuVO = mapToMenuVO(fields,key);
+                if(menuVO!=null){
+                    menus.add(menuVO);
+                }
+            }
+        }
+        return Result.success(menus);
+    }
+
+
+    private MenuVO mapToMenuVO(Map<Object, Object> fields, String key) {
+        if (fields == null || fields.isEmpty()) {
+            return null;
+        }
+        MenuVO menuVO = new MenuVO();
+        menuVO.setId(parseMenuIdFromKey(key));
+        menuVO.setName((String) fields.get("name"));
+        menuVO.setPrice(Integer.parseInt((String) fields.get("price")));
+        menuVO.setDescription((String) fields.get("description"));
+        menuVO.setImage((String) fields.get("image"));
+        menuVO.setNum(Integer.parseInt((String) fields.get("num")));
+        return menuVO;
+    }
+
+    //キーからmenuIdを取得する（userId:menuId）
+    private Long parseMenuIdFromKey(String key) {
+        String[] parts = key.split(":");
+        return Long.parseLong(parts[1]);
     }
 }
