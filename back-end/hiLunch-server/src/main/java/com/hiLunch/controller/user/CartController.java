@@ -3,7 +3,9 @@ package com.hiLunch.controller.user;
 import com.hiLunch.context.BaseContext;
 import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.entity.Menu;
+import com.hiLunch.entity.Stocks;
 import com.hiLunch.result.Result;
+import com.hiLunch.service.StocksService;
 import com.hiLunch.vo.MenuVO;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import java.util.Set;
 public class CartController {
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private StocksService stocksService;
     private Long userId = BaseContext.getCurrentId();
     private HashOperations hashOperations = redisTemplate.opsForHash();
 
@@ -31,7 +35,24 @@ public class CartController {
     * */
     @PostMapping("/add")
     public Result add(@RequestBody List<MenuDTO> list){
-        //TODO stocks check
+        //stocks check
+        List<Long> ids = new ArrayList<>();
+        for(MenuDTO menu : list){
+            ids.add(menu.getId());
+        }
+        List<Stocks> stockList = stocksService.checkByIds(ids);
+        List<Long> soldId = new ArrayList<>();
+        boolean soldFlag = false;
+        for(Stocks stock:stockList){
+            if(stock.getStock()<=0){
+                soldId.add(stock.getMenuId());
+                soldFlag =true;
+            }
+        }
+        //TODO front end
+        if(soldFlag){
+            return Result.error(soldId.toString());
+        }
 
         //料理をカート追加
         String redisKey = userId.toString();

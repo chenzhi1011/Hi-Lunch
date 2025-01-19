@@ -39,8 +39,8 @@ public class OrderServiceImpl implements OrderService {
      * @param
      * @return
      */
-//    public void createOrder(List<OrderDTO> list){
-//        orderMapper.insert();
-//    }
+    public void createOrder(List<OrderDTO> list){
+        orderMapper.insert();
+    }
 
 }

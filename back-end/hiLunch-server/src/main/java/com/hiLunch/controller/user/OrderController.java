@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,13 +56,14 @@ public class OrderController {
      * @param list
      *
      */
-//    @PostMapping("/create")
-    //TODO 和购物车的CRUD一起考虑
-    // 购物车是redis还是什么形式？从购物车加入，还是传数据到后端
-//    public Result createOrder(@RequestBody List<OrderDTO> list){
-//        orderService.createOrder(list);
-//        return Result.success();
-//    }
+    @PostMapping("/create")
+    public Result createOrder(@RequestBody List<OrderDTO> list){
+        //todo 悲观锁？stocks check
+
+
+        orderService.createOrder(list);
+        return Result.success();
+    }
 
     /**
      * paypay支払いに行く
@@ -73,7 +75,6 @@ public class OrderController {
     @Transactional
     //どこか失敗するなら、ロールバック
     public Result<String> pay(@RequestBody List<MenuDTO> list) throws ApiException {
-        //TODO stocks check
         QRCode qrCode = new QRCode();
         Integer amount = 0;
         for (MenuDTO m:list
@@ -119,7 +120,7 @@ public class OrderController {
     @ApiOperation("支払い方法は現金で")
     @Transactional
     public Result PayByCash(@RequestBody List<MenuDTO> list){
-        //TODO stocks check
+        //TODO if order cancel
         String orderNum = OrderNumberGenUtil.generateOrderNumber();
         orderService.cashOrderNum(list,orderNum);
         //TODO  if pay successfully, stock-1

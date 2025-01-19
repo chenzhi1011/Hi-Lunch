@@ -19,4 +19,7 @@ public interface OrderMapper {
 
 
     void insertOrderNum(Long userId, List<MenuDTO> list, String orderNo);
+
+    @Insert("")
+    void insert();
 }

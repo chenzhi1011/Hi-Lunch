@@ -8,7 +8,7 @@ import com.hiLunch.entity.Menu;
 import com.hiLunch.exception.DeletionNotAllowedException;
 import com.hiLunch.mapper.MenuMapper;
 import com.hiLunch.mapper.OrderMapper;
-import com.hiLunch.mapper.StockMapper;
+import com.hiLunch.mapper.StocksMapper;
 import com.hiLunch.result.PageResult;
 import com.hiLunch.service.MenuService;
 import com.hiLunch.constant.MessageConstant;
@@ -30,7 +30,7 @@ public class MenuServiceImpl implements MenuService {
     @Autowired
     private MenuMapper menuMapper;
     @Autowired
-    private StockMapper stockMapper;
+    private StocksMapper stocksMapper;
     @Autowired
     private OrderMapper orderMapper;
 

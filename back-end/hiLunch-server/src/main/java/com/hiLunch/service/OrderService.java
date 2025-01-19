@@ -1,6 +1,7 @@
 package com.hiLunch.service;
 
 import com.hiLunch.dto.MenuDTO;
+import com.hiLunch.dto.OrderDTO;
 import com.hiLunch.vo.MenuVO;
 import com.hiLunch.vo.OrderVO;
 
@@ -10,4 +11,6 @@ public interface OrderService {
     List<OrderVO> getAllOrder();
 
     void cashOrderNum(List<MenuDTO> list , String orderNum);
+
+    void createOrder(List<OrderDTO> list);
 }

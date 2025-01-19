@@ -1,8 +1,10 @@
 package com.hiLunch.controller.user;
 
 
+import com.hiLunch.entity.Stocks;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.MenuService;
+import com.hiLunch.service.StocksService;
 import com.hiLunch.vo.MenuVO;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import java.util.List;
 public class MenuController {
     @Autowired
     MenuService menuService;
+    @Autowired
+    StocksService stocksService;
 
     /*
      * show today'menu
@@ -30,7 +34,11 @@ public class MenuController {
         return Result.success(list);
     }
 
-    //TODO stocks並行問題の処理
-//    public Result<Integer> getStocks(){}
+
+    @GetMapping("/stocks")
+    public Result<List> getStocks(List<Long> ids){
+        List<Stocks> stocksList = stocksService.checkByIds(ids);
+        return Result.success(stocksList);
+    }
 
 }
