@@ -23,11 +23,12 @@ import java.util.Set;
 @RequestMapping("/user/cart")
 public class CartController {
     @Autowired
-    private RedisTemplate redisTemplate;
+    private RedisTemplate<String,Object> redisTemplate;
+
     @Autowired
     private StocksService stocksService;
     private Long userId = BaseContext.getCurrentId();
-    private HashOperations hashOperations = redisTemplate.opsForHash();
+    private HashOperations<String,String ,Object> hashOperations;
 
     /*
     * 料理をカート追加機能
@@ -54,6 +55,7 @@ public class CartController {
             return Result.error(soldId.toString());
         }
 
+        hashOperations = redisTemplate.opsForHash();
         //料理をカート追加
         String redisKey = userId.toString();
         try{
@@ -80,6 +82,7 @@ public class CartController {
      * */
     @PutMapping("/minus")
     public Result minusNum(Long menuId){
+        hashOperations = redisTemplate.opsForHash();
         //menuIdでnumを取得する
         String redisKey = userId+":"+menuId;
         Integer num =(Integer) hashOperations.get(redisKey,"num");
@@ -98,6 +101,7 @@ public class CartController {
      * */
     @PutMapping("/plus")
     public Result plusNum(Long menuId){
+        hashOperations = redisTemplate.opsForHash();
         String redisKey = userId+":"+menuId;
         Integer num =(Integer) hashOperations.get(redisKey,"num");
         hashOperations.put(redisKey,"num",++num);
@@ -110,6 +114,7 @@ public class CartController {
      * */
     @DeleteMapping("/delete")
     public Result deleteByMenuId(Long menuId){
+        hashOperations = redisTemplate.opsForHash();
         String redisKey = userId+":"+menuId;
         hashOperations.delete(redisKey);
         return Result.success();
@@ -138,6 +143,7 @@ public class CartController {
         }
         return Result.success(menus);
     }
+
 
 
     private MenuVO mapToMenuVO(Map<Object, Object> fields, String key) {

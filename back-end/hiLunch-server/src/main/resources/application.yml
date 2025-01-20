@@ -16,6 +16,11 @@ spring:
       host: ${hiLunch.redis.host}
       port: ${hiLunch.redis.port}
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 
 
 mybatis:

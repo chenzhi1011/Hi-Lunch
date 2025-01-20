@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hiLunch.mapper.StocksMapper">
+    <select id="selectByIds" resultType="Stocks">
+        select * from stocks
+            where menu_id =
+            <foreach collection="ids" item="id" >
+                #{id}
+            </foreach>
+    </select>
+</mapper>

@@ -13,9 +13,14 @@ spring:
     password: ${hiLunch.datasource.password}
   data:
     redis:
-      host: ${hiLunch.redi.host}
+      host: ${hiLunch.redis.host}
       port: ${hiLunch.redis.port}
 
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
 
 
 mybatis:

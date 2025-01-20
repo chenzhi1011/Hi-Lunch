@@ -1,6 +1,5 @@
 package com.hiLunch.controller.user;
 
-import com.hiLunch.constant.MessageConstant;
 import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.dto.OrderDTO;
 import com.hiLunch.exception.PaymentErrorException;
@@ -23,13 +22,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/user/order")
-@Api(tags="注文した料理に関する")
 @Slf4j
 public class OrderController {
     @Autowired
@@ -71,7 +67,6 @@ public class OrderController {
      *
      */
     @PostMapping("/pay")
-    @ApiOperation("ペイペイの支払い")
     @Transactional
     //どこか失敗するなら、ロールバック
     public Result<String> pay(@RequestBody List<MenuDTO> list) throws ApiException {
@@ -117,7 +112,6 @@ public class OrderController {
      *
      */
     @PostMapping("/cash")
-    @ApiOperation("支払い方法は現金で")
     @Transactional
     public Result PayByCash(@RequestBody List<MenuDTO> list){
         //TODO if order cancel

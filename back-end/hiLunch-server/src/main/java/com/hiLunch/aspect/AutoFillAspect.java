@@ -1,6 +1,7 @@
 package com.hiLunch.aspect;
 
 import com.hiLunch.annotation.AutoFill;
+import com.hiLunch.constant.AutoFillConstant;
 import com.hiLunch.context.BaseContext;
 import com.hiLunch.enumeration.OperationType;
 import lombok.extern.slf4j.Slf4j;
@@ -55,9 +56,9 @@ public class AutoFillAspect {
             //TODO 防止手动输入错误，通过常量autofillConstant来填写
             try {
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
-                Method setUpdateTime = entity.getClass().getDeclaredMethod("setUpdateTime", LocalDateTime.class);
-                Method setCreateUser = entity.getClass().getDeclaredMethod("setCreateUser", Long.class);
-                Method setUpdateUser = entity.getClass().getDeclaredMethod("setUpdateUser", Long.class);
+                Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);
+                Method setCreateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_USER, Long.class);
+                Method setUpdateUser = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_USER, Long.class);
 
                 setCreateTime.invoke(entity, localDateTime);
                 setUpdateTime.invoke(entity,localDateTime);

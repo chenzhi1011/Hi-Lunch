@@ -26,7 +26,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j
-@Api(tags = "従業員に関する")
 public class EmployeeController {
 
     @Autowired
@@ -41,7 +40,6 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/login")
-    @ApiOperation(value = "employee login")
     public Result<EmployeeLoginVO> login(@RequestBody EmployeeLoginDTO employeeLoginDTO) {
         log.info("employee login：{}", employeeLoginDTO);
 
@@ -71,7 +69,6 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/logout")
-    @ApiOperation("従業員ログアウト")
     public Result<String> logout() {
         return Result.success();
     }
@@ -82,7 +79,6 @@ public class EmployeeController {
      * @return
      */
     @PostMapping
-    @ApiOperation("従業員追加")
     public Result save(@RequestBody EmployeeDTO employeeDTO){
         log.info("新增员工：{}",employeeDTO);
         employeeService.save(employeeDTO);
@@ -95,7 +91,6 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/page")
-    @ApiOperation("ページングクエリ")
     public Result<PageResult> page(EmployeePageQueryDTO employeePageQueryDTO){
         log.info("ページングクエリ：{}", employeePageQueryDTO);
         PageResult pageResult = employeeService.pageQuery(employeePageQueryDTO);
@@ -109,7 +104,6 @@ public class EmployeeController {
      * @return
      */
     @PostMapping("/status/{status}")
-    @ApiOperation("従業員のアカウントを有効化・無効化する")
     public Result startOrStop(@PathVariable Integer status,Long id){
         log.info("従業員のアカウントを有効化・無効化する：{},{}",status,id);
         employeeService.startOrStop(status,id);
@@ -122,7 +116,6 @@ public class EmployeeController {
      * @return
      */
     @GetMapping("/{id}")
-    @ApiOperation("ID番号でクエリ")
     public Result<Employee> getById(@PathVariable Long id){
         Employee employee = employeeService.getById(id);
         return Result.success(employee);
@@ -134,7 +127,6 @@ public class EmployeeController {
      * @return
      */
     @PutMapping
-    @ApiOperation("従業員情報編集")
     public Result update(@RequestBody EmployeeDTO employeeDTO){
         log.info("従業員情報編集：{}", employeeDTO);
         employeeService.update(employeeDTO);
