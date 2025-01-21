@@ -1,6 +1,7 @@
 package com.hiLunch.controller.admin;
 
 
+import com.hiLunch.dto.EmployeeDTO;
 import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.dto.MenuPageQueryDTO;
 import com.hiLunch.result.PageResult;
@@ -123,4 +124,17 @@ public class MenuController {
     }
 
     //TODO stocks設定API　まだかんせいしていない
+    
+    /**
+     * 料理の画像をアップロード
+     * @param
+     * @return
+     */
+    @PostMapping
+    public Result upLoad(@RequestBody EmployeeDTO employeeDTO){
+        log.info("従業員情報編集：{}", employeeDTO);
+        employeeService.update(employeeDTO);
+        return Result.success();
+    }
+
 }
