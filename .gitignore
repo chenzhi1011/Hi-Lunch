@@ -4,3 +4,4 @@ back-end/.idea/
 # 忽略 application-dev.yml 文件
 back-end/hiLunch-server/target/classes/application-dev.yml
 
+back-end/hiLunch-server/src/main/resources/application-dev.yml

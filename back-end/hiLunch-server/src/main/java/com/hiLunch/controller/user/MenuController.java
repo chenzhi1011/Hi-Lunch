@@ -28,7 +28,7 @@ public class MenuController {
      * show today'menu
      *
      * */
-    @GetMapping
+    @GetMapping("/{weekday}")
     public Result<List> getMenuByday(@PathVariable Integer weekday){
         List<MenuVO> list = menuService.getMenuByDay(weekday);
         return Result.success(list);

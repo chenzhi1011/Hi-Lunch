@@ -17,7 +17,7 @@ public class HomepageController {
      * ホーム画面に今日のベストセーラー３
      *
      * */
-    @GetMapping("/recommend")
+    @GetMapping("/recommend/{weekday}")
     public Result<List> SalesTop3(@PathVariable Integer weekday){
         List<MenuVO> list = menuService.getTop3(weekday);
         return Result.success(list);

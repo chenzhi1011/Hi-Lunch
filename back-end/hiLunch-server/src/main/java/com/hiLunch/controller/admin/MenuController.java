@@ -1,11 +1,11 @@
 package com.hiLunch.controller.admin;
 
 
-import com.hiLunch.dto.EmployeeDTO;
 import com.hiLunch.dto.MenuDTO;
 import com.hiLunch.dto.MenuPageQueryDTO;
 import com.hiLunch.result.PageResult;
 import com.hiLunch.result.Result;
+import com.hiLunch.service.AwsService;
 import com.hiLunch.service.MenuService;
 import com.hiLunch.vo.MenuVO;
 import io.swagger.annotations.Api;
@@ -13,9 +13,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
-import java.util.Set;
+
 
 /**
  * メニュー管理
@@ -28,6 +28,8 @@ public class MenuController {
 
     @Autowired
     private MenuService menuService;
+    @Autowired
+    private AwsService awsService;
 
     /**
      * 料理をページングでクエリ
@@ -49,7 +51,7 @@ public class MenuController {
      * @param menuDTO
      * @return
      */
-    @PostMapping
+    @PostMapping("/add")
     @ApiOperation("料理追加")
     public Result save(@RequestBody MenuDTO menuDTO) {
         log.info("料理追加：{}", menuDTO);
@@ -124,17 +126,17 @@ public class MenuController {
     }
 
     //TODO stocks設定API　まだかんせいしていない
-    
+
     /**
      * 料理の画像をアップロード
      * @param
      * @return
      */
-    @PostMapping
-    public Result upLoad(@RequestBody EmployeeDTO employeeDTO){
-        log.info("従業員情報編集：{}", employeeDTO);
-        employeeService.update(employeeDTO);
-        return Result.success();
+    @PostMapping("/upload")
+    public Result<String> upload(MultipartFile file){
+        log.info(file.toString());
+        String url = awsService.upLoadFile(file);
+        return Result.success(url);
     }
 
 }

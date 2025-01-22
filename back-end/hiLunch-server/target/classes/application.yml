@@ -62,3 +62,9 @@ hilunch:
     assume-merchant: ${paypay.assume-merchant}
 
 
+aws:
+  endpoint: ${aws.endpoint}
+  accessKey: ${aws.accessKey}
+  secretKey: ${aws.secretKey}
+  bucketName: ${aws.bucketName}
+
