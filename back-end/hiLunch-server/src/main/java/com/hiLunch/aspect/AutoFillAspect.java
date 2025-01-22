@@ -39,7 +39,7 @@ public class AutoFillAspect {
         OperationType operationType = autoFill.value();
 
         //2.获取当前被拦截对象的参数
-        //TODO 利用反射
+        //利用反射
         Object args[] = joinPoint.getArgs();
         if (args[0] == null || args.length == 0) {
             return;
@@ -53,7 +53,7 @@ public class AutoFillAspect {
         //4.根据当前不同操作类型，为对应的属性通过反射赋值
         if (autoFill.value() == (OperationType.INSERT)) {
             //利用反射获取方法
-            //TODO 防止手动输入错误，通过常量autofillConstant来填写
+            // 防止手动输入错误，通过常量autofillConstant来填写
             try {
                 Method setCreateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_CREATE_TIME, LocalDateTime.class);
                 Method setUpdateTime = entity.getClass().getDeclaredMethod(AutoFillConstant.SET_UPDATE_TIME, LocalDateTime.class);

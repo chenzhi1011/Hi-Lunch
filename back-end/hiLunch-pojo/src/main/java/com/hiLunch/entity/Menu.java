@@ -24,7 +24,6 @@ public class Menu implements Serializable {
     private String image;
     private Integer category;
     private Integer isSale;
-    //TODO weekday新增的项目
     private Integer weekday;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;

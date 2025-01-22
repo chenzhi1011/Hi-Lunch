@@ -1,8 +1,10 @@
 package com.hiLunch.mapper;
 
 import com.github.pagehelper.Page;
+import com.hiLunch.annotation.AutoFill;
 import com.hiLunch.dto.MenuPageQueryDTO;
 import com.hiLunch.entity.Menu;
+import com.hiLunch.enumeration.OperationType;
 import com.hiLunch.vo.MenuVO;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
@@ -28,7 +30,7 @@ public interface MenuMapper {
      *
      * @param menu
      */
-    //TODO AOP
+    @AutoFill(OperationType.INSERT)
     void insert(Menu menu);
 
 
@@ -54,7 +56,7 @@ public interface MenuMapper {
      *
      * @param menu
      */
-    //TODO aop
+    @AutoFill(OperationType.UPDATE)
     void update(Menu menu);
 
     /**

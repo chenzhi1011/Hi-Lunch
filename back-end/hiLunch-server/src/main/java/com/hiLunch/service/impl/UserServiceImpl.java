@@ -33,8 +33,8 @@ public class UserServiceImpl implements UserService {
             throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
         //pwd検証
-       //TODO　user側からのpwdをmd5で暗号化処理
-//        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes());
+       //user側からのpwdをmd5で暗号化処理
+        pwd = DigestUtils.md5DigestAsHex(pwd.getBytes());
         if (!pwd.equals(user.getPwd())) {
             //パスワードが合ってない場合
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
@@ -50,24 +50,22 @@ public class UserServiceImpl implements UserService {
         }
         User user = new User();
         BeanUtils.copyProperties(userDTO,user);
+        String password = DigestUtils.md5DigestAsHex(user.getPwd().getBytes());
+        user.setPwd(password);
         log.info("user:{}",user);
-        //TODO AOP で実現
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
         userMapper.insert(user);
     }
 
     public void updateUserInfo(UserDTO userDTO,String oldPwd){
         Long userId = BaseContext.getCurrentId();
         User user = userMapper.getById(userId);
+        String password = DigestUtils.md5DigestAsHex(user.getPwd().getBytes());
         //获取pwd查看是否正确
-        if(!oldPwd.equals(user.getPwd())){
+        if(!oldPwd.equals(password)){
             throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
         }
+        userDTO.setPwd(DigestUtils.md5DigestAsHex(userDTO.getPwd().getBytes()));
         BeanUtils.copyProperties(userDTO,user);
-        //TODO AOP
-        user.setUpdateTime(LocalDateTime.now());
-        user.setId(BaseContext.getCurrentId());
         userMapper.update(user);
     }
 }

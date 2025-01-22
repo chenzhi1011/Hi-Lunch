@@ -17,7 +17,6 @@ public class TokenServiceImpl implements TokenService {
     public void insert(String token) {
         PersistToken persistToken = new PersistToken();
         persistToken.setSecretToken(token);
-        persistToken.setCreateTime(LocalDateTime.now());
         tokenMapper.insert(persistToken);
     }
 

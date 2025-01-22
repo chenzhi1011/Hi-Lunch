@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @PutMapping("/pwdreset")
-    //TODO 重要信息暴露在url中
+    //TODO 重要信息暴露在url中?
     public Result pwdReset(@RequestBody UserDTO userDTO,String oldPwd){
         userService.updateUserInfo(userDTO,oldPwd);
         return Result.success();

@@ -50,7 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
 
         //pwd検証
-        //TODO　user側からのpwdをmd5で暗号化処理
+        //user側からのpwdをmd5で暗号化処理
         password = DigestUtils.md5DigestAsHex(password.getBytes());
         if (!password.equals(employee.getPassword())) {
             //パスワードが合ってない場合
@@ -82,13 +82,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //pwd設定　　デフォルトは123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-
-//      //TODO　AOPで追加
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
@@ -153,9 +146,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         Employee employee = new Employee();
         BeanUtils.copyProperties(employeeDTO, employee);
-
-        //employee.setUpdateTime(LocalDateTime.now());
-        //employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.update(employee);
     }

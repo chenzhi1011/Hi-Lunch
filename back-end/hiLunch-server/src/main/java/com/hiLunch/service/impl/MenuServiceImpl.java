@@ -103,7 +103,6 @@ public class MenuServiceImpl implements MenuService {
     public void update(MenuDTO menuDTO) {
         Menu menu = new Menu();
         BeanUtils.copyProperties(menuDTO, menu);
-
         menuMapper.update(menu);
     }
 

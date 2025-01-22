@@ -28,8 +28,6 @@ public class Employee implements Serializable {
     private String phone;
 
 
-    //TODO need to be deleted: sex and id_number
-
     private Integer status;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class OrderDTO {
     private Long orderNo;
-    private Integer menuId;
+    private Long menuId;
     private Integer num;
     private LocalDateTime createTime;
 }

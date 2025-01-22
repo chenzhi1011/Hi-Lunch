@@ -1,8 +1,10 @@
 package com.hiLunch.mapper;
 
 import com.github.pagehelper.Page;
+import com.hiLunch.annotation.AutoFill;
 import com.hiLunch.dto.EmployeePageQueryDTO;
 import com.hiLunch.entity.Employee;
+import com.hiLunch.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -25,7 +27,7 @@ public interface EmployeeMapper {
     @Insert("insert into employee (name, username, password, phone, create_time, update_time, create_user, update_user,status) " +
             "values " +
             "(#{name},#{username},#{password},#{phone},#{createTime},#{updateTime},#{createUser},#{updateUser},#{status})")
-    //TODO AOP
+    @AutoFill(OperationType.INSERT)
     void insert(Employee employee);
 
     /**
@@ -39,7 +41,7 @@ public interface EmployeeMapper {
      * 根据主键动态修改属性
      * @param employee
      */
-    //TODO AOP
+    @AutoFill(OperationType.UPDATE)
     void update(Employee employee);
 
     /**

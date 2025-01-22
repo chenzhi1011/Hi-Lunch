@@ -7,9 +7,11 @@ import com.hiLunch.result.PageResult;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.AwsService;
 import com.hiLunch.service.MenuService;
+import com.hiLunch.service.StocksService;
 import com.hiLunch.vo.MenuVO;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +32,8 @@ public class MenuController {
     private MenuService menuService;
     @Autowired
     private AwsService awsService;
+    @Autowired
+    private StocksService stocksService;
 
     /**
      * 料理をページングでクエリ
@@ -57,9 +61,6 @@ public class MenuController {
         log.info("料理追加：{}", menuDTO);
         menuService.addMenu(menuDTO);
 
-        //TODO 清理redis缓存数据
-//        String key = "dish_" + menuDTO.getCategory();
-//        cleanCache(key);
         return Result.success();
     }
 
@@ -75,9 +76,7 @@ public class MenuController {
     public Result delete(@RequestParam List<Long> ids) {
         log.info("選択した料理を一括で削除：{}", ids);
         menuService.deleteBatch(ids);
-
         //TODO redis
-
         return Result.success();
     }
 
@@ -106,7 +105,6 @@ public class MenuController {
     public Result update(@RequestBody MenuDTO menuDTO) {
         log.info("IDで料理情報を編集：{}", menuDTO);
         menuService.update(menuDTO);
-        //TODO aop
         return Result.success();
     }
 
@@ -125,7 +123,18 @@ public class MenuController {
         return Result.success();
     }
 
-    //TODO stocks設定API　まだかんせいしていない
+
+    /**
+     * 料理のstockを設定
+     *
+     * @param stock
+     *
+     */
+    @PutMapping("/stock")
+    public Result setStocks(Long menuId, Integer stock){
+        stocksService.setStocks(menuId,stock);
+        return Result.success();
+    }
 
     /**
      * 料理の画像をアップロード

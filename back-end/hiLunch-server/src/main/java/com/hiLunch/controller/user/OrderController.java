@@ -6,6 +6,7 @@ import com.hiLunch.exception.PaymentErrorException;
 import com.hiLunch.properties.PaypayProperties;
 import com.hiLunch.result.Result;
 import com.hiLunch.service.OrderService;
+import com.hiLunch.service.StocksService;
 import com.hiLunch.utils.OrderNumberGenUtil;
 import com.hiLunch.vo.OrderVO;
 import io.swagger.annotations.Api;
@@ -32,6 +33,8 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     PaypayProperties paypayProperties;
+    @Autowired
+    StocksService stocksService;
 
 
     /**
@@ -54,8 +57,7 @@ public class OrderController {
      */
     @PostMapping("/create")
     public Result createOrder(@RequestBody List<OrderDTO> list){
-        //todo 悲观锁？stocks check
-
+        //stocks check
 
         orderService.createOrder(list);
         return Result.success();
@@ -101,8 +103,8 @@ public class OrderController {
         if(!response.getResultInfo().getCode().equals("SUCCESS")){
             throw new PaymentErrorException(response.getResultInfo().getMessage());
         }
-        //TODO  if pay successfully, stock-1
         return Result.success(response.getData().getUrl());
+        //TODO  if pay successfully, stock-1
     }
 
 
@@ -114,10 +116,10 @@ public class OrderController {
     @PostMapping("/cash")
     @Transactional
     public Result PayByCash(@RequestBody List<MenuDTO> list){
-        //TODO if order cancel
+        //stocks check
+        stocksService.updateStocks(list);
         String orderNum = OrderNumberGenUtil.generateOrderNumber();
         orderService.cashOrderNum(list,orderNum);
-        //TODO  if pay successfully, stock-1
         return Result.success(orderNum);
     }
 
