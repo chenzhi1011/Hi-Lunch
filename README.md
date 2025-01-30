@@ -12,10 +12,10 @@
 
 これらの課題により、HiーLunchアプリケーションをデザインしました。
 ## 画面表示
-![To C  社員からの利用画面]()
+![To C  社員からの利用画面](image/hi-lunch-ui-design to C.jpg)
 
 
-![To B    管理者からの利用画面]
+![To B    管理者からの利用画面](image/hi-lunch-ui-design to B.jpg)
 ### 機能紹介
 
 ### テック
