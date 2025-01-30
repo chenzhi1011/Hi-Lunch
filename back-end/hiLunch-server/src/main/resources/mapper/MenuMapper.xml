@@ -4,9 +4,9 @@
 <mapper namespace="com.hiLunch.mapper.MenuMapper">
     <insert id="insert">
         insert into menu (name, category, price, image, description, create_time, update_time, create_user,
-                          update_user, is_sale)
+                          update_user, is_sale,weekday)
         values (#{name}, #{category}, #{price}, #{image}, #{description}, #{createTime}, #{updateTime}, #{createUser},
-                #{updateUser}, #{isSale})
+                #{updateUser}, #{isSale},#{weekday})
     </insert>
 
 <!--    TODO-->
@@ -21,6 +21,9 @@
             </if>
             <if test="isSale != null">
                 and is_sale = #{isSale}
+            </if>
+            <if test="weekday != null">
+                and weekday = #{weekday}
             </if>
         </where>
         order by create_time desc
