@@ -56,9 +56,9 @@
 - Intelli Idea
 - VsCode  
 ## APIドキュメント
-
+![swagger](./image/swaggerAPI.jpg)
 ## データベース
-![図](./image/rldb.jpg)
+![図](./image/rldb.jpeg)
 
 ## 今後の課題
 - フロントエンドの開発
